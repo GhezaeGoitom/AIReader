@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.gg.aireader.ui.screens.reader.PdfViewerScreen
 import com.gg.aireader.ui.theme.AIreaderTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,8 +23,16 @@ class MainActivity : ComponentActivity() {
         setContent {
             AIreaderTheme {
 
-                val navController = rememberNavController()
-                AppNavGraph(navController = navController)
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    PdfViewerScreen(
+                        modifier = Modifier
+                            .padding(innerPadding)
+                    )
+                }
+
+
+//                val navController = rememberNavController()
+//                AppNavGraph(navController = navController)
             }
         }
     }
