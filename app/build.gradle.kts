@@ -76,6 +76,13 @@ dependencies {
     implementation(libs.coil.compose)
 
 
+    // text extraction
+    implementation("com.google.mlkit:text-recognition:16.0.1")
+
+    //text extraction for play service
+    implementation("com.google.android.gms:play-services-mlkit-text-recognition:19.0.1")
+
+
 
 
 }
