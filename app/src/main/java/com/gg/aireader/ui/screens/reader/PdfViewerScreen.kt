@@ -25,14 +25,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.gg.aireader.utils.PdfBitmapConverter
+import dagger.hilt.android.lifecycle.HiltViewModel
 
 
 @Composable
-fun PdfViewerScreen(modifier: Modifier = Modifier, viewModel: ReaderViewModel = viewModel()) {
+fun PdfViewerScreen(modifier: Modifier = Modifier, viewModel: ReaderViewModel = hiltViewModel()) {
 
 
     val pages by viewModel.renderedPages.collectAsState()
@@ -46,7 +48,7 @@ fun PdfViewerScreen(modifier: Modifier = Modifier, viewModel: ReaderViewModel = 
 
     LaunchedEffect(isRendered) {
         if (isRendered){
-            viewModel.extractTextFromPage(10)
+            viewModel.extractTextFromPage(10, context)
         }
     }
 
@@ -65,7 +67,6 @@ fun PdfViewerScreen(modifier: Modifier = Modifier, viewModel: ReaderViewModel = 
                     PdfPage(page = page)
                 }
             }
-            viewModel.extractTextFromPage(1)
             Text(text = viewModel.pageText.value.length.toString() , modifier = Modifier.padding(16.dp))
         }
     }
