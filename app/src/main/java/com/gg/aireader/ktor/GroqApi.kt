@@ -40,7 +40,7 @@ class GroqApi @Inject constructor(val client: HttpClient) {
         val response = client.post(baseUrl) {
             header("Authorization", "Bearer $apiKey")
             contentType(ContentType.Application.Json)
-            setBody(request) // <-- FIXED: safe serialization
+            setBody(request)
         }
 
         val json = response.body<JsonObject>()

@@ -1,0 +1,17 @@
+{
+  "Calm": [
+    "https://firebasestorage.googleapis.com/v0/b/aireader-a8620.firebasestorage.app/o/1.mp3?alt=media&token=7c98c362-174b-4e05-aabe-c717c81a13fa"
+  ],
+  "Happy": [
+    "https://firebasestorage.googleapis.com/v0/b/aireader-a8620.firebasestorage.app/o/2.mp3?alt=media&token=a5d23eab-d040-41ea-b89a-746d844b6d3e"
+  ],
+  "Sad": [
+    "https://firebasestorage.googleapis.com/v0/b/aireader-a8620.firebasestorage.app/o/3.mp3?alt=media&token=e441f24e-4149-416c-82cc-8eb8c125464c"
+  ],
+  "Romantic": [
+    "https://firebasestorage.googleapis.com/v0/b/aireader-a8620.firebasestorage.app/o/4.mp3?alt=media&token=d71289bf-a022-4a4f-9e12-2ea2f04e66ef"
+  ],
+  "Tense": [
+    "https://firebasestorage.googleapis.com/v0/b/aireader-a8620.firebasestorage.app/o/5.mp3?alt=media&token=595621cc-62bb-47cd-ae82-8494bc98cd64"
+  ]
+}

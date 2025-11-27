@@ -39,6 +39,7 @@ fun PdfViewerScreen(modifier: Modifier = Modifier, viewModel: ReaderViewModel = 
 
     val pages by viewModel.renderedPages.collectAsState()
     val isRendered by viewModel.isRendered.collectAsState()
+    val isPlaying by viewModel.isPlaying.collectAsState()
     val context = LocalContext.current
 
     val choosePdfLauncher = rememberLauncherForActivityResult(
@@ -67,7 +68,14 @@ fun PdfViewerScreen(modifier: Modifier = Modifier, viewModel: ReaderViewModel = 
                     PdfPage(page = page)
                 }
             }
-            Text(text = viewModel.pageText.value.length.toString() , modifier = Modifier.padding(16.dp))
+            Button(onClick = {
+                if(!isPlaying){
+                    viewModel.play("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")
+                }else{
+                    viewModel.pause()
+                }
+                viewModel.togglePlay()
+            }) { }
         }
     }
 }

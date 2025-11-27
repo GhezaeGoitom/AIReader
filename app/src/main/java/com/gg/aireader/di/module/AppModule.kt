@@ -1,9 +1,13 @@
 package com.gg.aireader.di.module
 
+import android.content.Context
+import androidx.media3.common.AudioAttributes
+import androidx.media3.exoplayer.ExoPlayer
 import com.gg.aireader.ktor.GroqApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
@@ -25,11 +29,27 @@ object AppModule{
         }
     }
 
-
     @Provides
     @Singleton
     fun provideGroqApi(client: HttpClient): GroqApi{
         return GroqApi(client)
     }
+
+    @Provides
+    @Singleton
+    fun provideExoPlayer(@ApplicationContext context: Context): ExoPlayer{
+        val audioAttributes = AudioAttributes.Builder()
+    .setContentType(androidx.media3.common.C.AUDIO_CONTENT_TYPE_MUSIC)
+    .setUsage(androidx.media3.common.C.USAGE_MEDIA)
+    .build()
+
+
+        return ExoPlayer.Builder(context)
+            .setAudioAttributes(audioAttributes, true)
+            .build()
+    }
+
+
+
 
 }
