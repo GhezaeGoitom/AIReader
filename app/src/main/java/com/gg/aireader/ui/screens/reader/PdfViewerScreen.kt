@@ -54,13 +54,15 @@ fun PdfViewerScreen(modifier: Modifier = Modifier, viewModel: ReaderViewModel = 
     }
 
     if (pages.isEmpty()){
-        Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Button(onClick = {
-                choosePdfLauncher.launch("application/pdf")
-            }) {
-                Text(text = "choose book")
-            }
-        }
+//        Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+//            Button(onClick = {
+//
+//            }) {
+//                Text(text = "choose book")
+//            }
+//        }
+        LaunchedEffect(Unit) {
+        choosePdfLauncher.launch("application/pdf")}
     }else{
         Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
             LazyColumn(modifier = Modifier.weight(1f).fillMaxSize()) {
