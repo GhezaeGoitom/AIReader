@@ -2,6 +2,7 @@ package com.gg.aireader.ui.screens.reader
 
 import android.graphics.Bitmap
 import android.net.Uri
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
@@ -40,6 +41,8 @@ fun PdfViewerScreen(modifier: Modifier = Modifier, viewModel: ReaderViewModel = 
     val pages by viewModel.renderedPages.collectAsState()
     val isRendered by viewModel.isRendered.collectAsState()
     val isPlaying by viewModel.isPlaying.collectAsState()
+    val isMoodAvailable by viewModel.isMoodAvailable.collectAsState()
+    val mood by viewModel.mood.collectAsState()
     val context = LocalContext.current
 
     val choosePdfLauncher = rememberLauncherForActivityResult(
@@ -53,14 +56,17 @@ fun PdfViewerScreen(modifier: Modifier = Modifier, viewModel: ReaderViewModel = 
         }
     }
 
+    LaunchedEffect(isMoodAvailable) {
+        if (isMoodAvailable){
+            val musicList = viewModel.getMusicUrlByMood(mood)
+            Log.d("gg_mood", musicList.toString())
+            Log.d("gg_mood", musicList.size.toString())
+            Log.d("gg_mood", musicList[0].toString())
+            viewModel.play(musicList[0].audio)
+        }
+    }
+
     if (pages.isEmpty()){
-//        Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-//            Button(onClick = {
-//
-//            }) {
-//                Text(text = "choose book")
-//            }
-//        }
         LaunchedEffect(Unit) {
         choosePdfLauncher.launch("application/pdf")}
     }else{
@@ -72,7 +78,7 @@ fun PdfViewerScreen(modifier: Modifier = Modifier, viewModel: ReaderViewModel = 
             }
             Button(onClick = {
                 if(!isPlaying){
-                    viewModel.play("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")
+                    viewModel.resume()
                 }else{
                     viewModel.pause()
                 }

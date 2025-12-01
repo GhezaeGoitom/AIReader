@@ -29,6 +29,12 @@ android {
             "GROQ_API_KEY",
             "\"${project.properties["GROQ_API_KEY"]}\""
         )
+
+        buildConfigField(
+            "String",
+            "JAMENDO_CLIENT_ID",
+            "\"${project.properties["JAMENDO_CLIENT_ID"]}\""
+        )
     }
 
     buildTypes {

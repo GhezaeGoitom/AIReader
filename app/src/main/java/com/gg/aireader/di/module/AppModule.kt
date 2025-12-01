@@ -3,7 +3,7 @@ package com.gg.aireader.di.module
 import android.content.Context
 import androidx.media3.common.AudioAttributes
 import androidx.media3.exoplayer.ExoPlayer
-import com.gg.aireader.ktor.GroqApi
+import com.gg.aireader.ktor.ApiManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,6 +13,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.json.Json
 import javax.inject.Singleton
 
 @Module
@@ -24,15 +25,17 @@ object AppModule{
     fun provideKtorClient(): HttpClient{
         return HttpClient(OkHttp) {
             install(ContentNegotiation){
-                json()
+                json(
+                    Json { ignoreUnknownKeys = true }
+                )
             }
         }
     }
 
     @Provides
     @Singleton
-    fun provideGroqApi(client: HttpClient): GroqApi{
-        return GroqApi(client)
+    fun provideApiManager(client: HttpClient): ApiManager{
+        return ApiManager(client)
     }
 
     @Provides

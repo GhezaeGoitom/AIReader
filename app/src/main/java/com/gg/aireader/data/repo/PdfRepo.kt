@@ -1,7 +1,7 @@
 package com.gg.aireader.data.repo
 
 import android.graphics.Bitmap
-import com.gg.aireader.ktor.GroqApi
+import com.gg.aireader.ktor.ApiManager
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
@@ -10,7 +10,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class PdfRepo @Inject constructor(private val groqApi: GroqApi){
+class PdfRepo @Inject constructor(private val apiManager: ApiManager){
 
     suspend fun extractTextFromBitmap(bitmap: Bitmap): String =
         suspendCoroutine { continuation ->
@@ -25,7 +25,7 @@ class PdfRepo @Inject constructor(private val groqApi: GroqApi){
 
 
     suspend fun analyzeMood(pageText: String): String{
-        return groqApi.classifyMood(pageText)
+        return apiManager.classifyMood(pageText)
     }
 
 }
