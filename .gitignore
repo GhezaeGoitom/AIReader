@@ -13,6 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
-# Local properties (API keys, local config)
 gradle.properties
 
