@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -32,6 +34,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.gg.aireader.utils.PdfBitmapConverter
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 
 
 @Composable
@@ -44,6 +48,11 @@ fun PdfViewerScreen(modifier: Modifier = Modifier, viewModel: ReaderViewModel = 
     val isMoodAvailable by viewModel.isMoodAvailable.collectAsState()
     val mood by viewModel.mood.collectAsState()
     val context = LocalContext.current
+    val listState = rememberLazyListState()
+
+    // store rendered page for later catch
+    val processedPages = remember { mutableSetOf<Int>() }
+
 
     val choosePdfLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()) { uri ->
@@ -52,18 +61,32 @@ fun PdfViewerScreen(modifier: Modifier = Modifier, viewModel: ReaderViewModel = 
 
     LaunchedEffect(isRendered) {
         if (isRendered){
-            viewModel.extractTextFromPage(10, context)
+            viewModel.extractTextFromPage(10)
         }
     }
 
     LaunchedEffect(isMoodAvailable) {
         if (isMoodAvailable){
             val musicList = viewModel.getMusicUrlByMood(mood)
-            Log.d("gg_mood", musicList.toString())
-            Log.d("gg_mood", musicList.size.toString())
-            Log.d("gg_mood", musicList[0].toString())
             viewModel.play(musicList[0].audio)
         }
+    }
+
+    LaunchedEffect(listState) {
+        snapshotFlow { listState.firstVisibleItemIndex }
+            .distinctUntilChanged()
+            .debounce(600)
+            .collect { page ->
+                // skip if already processed
+//                if (!processedPages.contains(page)) {
+//                    processedPages.add(page)
+//
+////                    processPage(page)
+//                }
+                Log.e("gg_page",page.toString())
+            }
+
+
     }
 
     if (pages.isEmpty()){
@@ -71,7 +94,7 @@ fun PdfViewerScreen(modifier: Modifier = Modifier, viewModel: ReaderViewModel = 
         choosePdfLauncher.launch("application/pdf")}
     }else{
         Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
-            LazyColumn(modifier = Modifier.weight(1f).fillMaxSize()) {
+            LazyColumn(modifier = Modifier.weight(1f).fillMaxSize(), state = listState) {
                 itemsIndexed(pages){ index, page ->
                     PdfPage(page = page)
                 }

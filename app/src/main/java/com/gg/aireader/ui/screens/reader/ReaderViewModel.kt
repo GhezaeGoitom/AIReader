@@ -60,9 +60,6 @@ class ReaderViewModel @Inject constructor(private val pdfRepo: PdfRepo,
         _isPlaying.value = !_isPlaying.value
     }
 
-    fun setPlaying(value: Boolean){
-
-    }
 
 
     fun loadPdf(uri: Uri, context: Context){
@@ -74,14 +71,15 @@ class ReaderViewModel @Inject constructor(private val pdfRepo: PdfRepo,
         }
     }
 
-    fun extractTextFromPage(pageIndex: Int, context: Context){
+    fun extractTextFromPage(pageIndex: Int){
         viewModelScope.launch(Dispatchers.Default) {
             try {
+                _isMoodAvailable.value = false
                 val page = _renderedPages.value[pageIndex]
                 val text = pdfRepo.extractTextFromBitmap(page)
                 Log.d("GG_RENDER", "Bitmap size: ${page.width}x${page.height}")
                 Log.d("GG_RENDER2", "Bitmap text: ${text.substring(0,30)}")
-                _pageText.value = text.substring(5, 10)
+                _pageText.value = text
                 val moodFromOCR = pdfRepo.analyzeMood(text)
                 Log.d("gg_render_2220", moodFromOCR.toString())
                 _mood.value = moodFromOCR
@@ -110,6 +108,19 @@ class ReaderViewModel @Inject constructor(private val pdfRepo: PdfRepo,
         super.onCleared()
         player.release()
     }
+
+
+//    suspend fun processPage(page: Int) = withContext(Dispatchers.IO) {
+//        val ocr = runOCR(page)
+//        val mood = classifyMood(ocr)
+//        val music = getMusicForMood(mood)
+//
+//        // update UI
+//        withContext(Dispatchers.Main) {
+//            onMusicReady(music)
+//        }
+//    }
+
 
 
 }
