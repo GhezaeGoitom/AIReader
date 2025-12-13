@@ -9,10 +9,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.gg.aireader.room.model.RecentBook
 import com.gg.aireader.ui.screens.model.Book
 
 @Composable
-fun BookItem(book: Book, onClick: () -> Unit) {
+fun BookItem(book: RecentBook, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()

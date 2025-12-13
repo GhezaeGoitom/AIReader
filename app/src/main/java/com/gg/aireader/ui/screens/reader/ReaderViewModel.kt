@@ -3,14 +3,18 @@ package com.gg.aireader.ui.screens.reader
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
+import android.provider.OpenableColumns
 import android.util.Log
+import androidx.core.net.toFile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
+import com.gg.aireader.data.repo.BooksRepo
 import com.gg.aireader.data.repo.MusicRepo
 import com.gg.aireader.data.repo.PdfRepo
 import com.gg.aireader.ktor.JamendoTrack
+import com.gg.aireader.room.model.RecentBook
 import com.gg.aireader.ui.screens.model.Mood
 import com.gg.aireader.utils.PdfBitmapConverter
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +27,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ReaderViewModel @Inject constructor(private val pdfRepo: PdfRepo,
                                           private val player: ExoPlayer,
-    private val musicRepo: MusicRepo): ViewModel() {
+    private val musicRepo: MusicRepo, private val booksRepo: BooksRepo): ViewModel() {
     private val _pageText = MutableStateFlow("")
     val pageText = _pageText.asStateFlow()
 
@@ -108,19 +112,5 @@ class ReaderViewModel @Inject constructor(private val pdfRepo: PdfRepo,
         super.onCleared()
         player.release()
     }
-
-
-//    suspend fun processPage(page: Int) = withContext(Dispatchers.IO) {
-//        val ocr = runOCR(page)
-//        val mood = classifyMood(ocr)
-//        val music = getMusicForMood(mood)
-//
-//        // update UI
-//        withContext(Dispatchers.Main) {
-//            onMusicReady(music)
-//        }
-//    }
-
-
 
 }

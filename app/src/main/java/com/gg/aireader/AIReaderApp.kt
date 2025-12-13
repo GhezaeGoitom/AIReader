@@ -6,4 +6,3 @@ import dagger.hilt.android.HiltAndroidApp
 @HiltAndroidApp
 class AIReaderApp : Application()
 
-

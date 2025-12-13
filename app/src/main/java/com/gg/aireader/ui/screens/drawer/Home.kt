@@ -24,13 +24,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.gg.aireader.ui.screens.home.HomeScreen
 import com.gg.aireader.ui.screens.model.Routes
-import com.gg.aireader.ui.screens.reader.PdfViewerScreen
-import com.gg.aireader.ui.screens.setting.SettingsScreen
+import com.gg.aireader.ui.screens.navigation.AppNavGraph
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -107,24 +103,7 @@ fun MainApp() {
                 )
             }
         ) { innerPadding ->
-            NavHost(
-                navController = navController,
-                startDestination = Routes.HOME,
-                modifier = Modifier.padding(innerPadding)
-            ) {
-
-                composable(Routes.HOME) {
-                    HomeScreen(navController)
-                }
-
-                composable(Routes.SETTINGS) {
-                    SettingsScreen()
-                }
-
-                composable(Routes.READER){
-                    PdfViewerScreen()
-                }
-            }
+            AppNavGraph(innerPadding = innerPadding, navController = navController)
         }
     }
 }
