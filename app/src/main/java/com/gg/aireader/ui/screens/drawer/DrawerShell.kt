@@ -24,6 +24,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.gg.aireader.ui.screens.model.Routes
 import com.gg.aireader.ui.screens.navigation.AppNavGraph
@@ -31,11 +32,11 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainApp() {
+fun DrawerShell(parentNavController: NavHostController) {
 
+    val drawerNavController = rememberNavController()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    val navController = rememberNavController()
 
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -59,9 +60,9 @@ fun MainApp() {
                     onClick = {
                         scope.launch {
                             drawerState.close()
-                            navController.navigate(Routes.HOME){
+                            drawerNavController.navigate(Routes.HOME){
                                 launchSingleTop = true
-                                popUpTo(navController.graph.startDestinationId)
+                                popUpTo(drawerNavController.graph.startDestinationId)
                             }
                         }
                     },
@@ -74,9 +75,9 @@ fun MainApp() {
                     onClick = {
                         scope.launch {
                             drawerState.close()
-                            navController.navigate(Routes.SETTINGS){
+                            drawerNavController.navigate(Routes.SETTINGS){
                                 launchSingleTop = true
-                                popUpTo(navController.graph.startDestinationId)
+                                popUpTo(drawerNavController.graph.startDestinationId)
                             }
                         }
                     },
@@ -103,7 +104,9 @@ fun MainApp() {
                 )
             }
         ) { innerPadding ->
-            AppNavGraph(innerPadding = innerPadding, navController = navController)
+            AppNavGraph(innerPadding = innerPadding,
+                drawerNavController =  drawerNavController,
+                parentNavController = parentNavController)
         }
     }
 }

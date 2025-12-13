@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.gg.aireader.ui.screens.common.BookItem
 import com.gg.aireader.ui.screens.model.Routes
 
@@ -34,7 +35,8 @@ import com.gg.aireader.ui.screens.model.Routes
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    navController: NavController,
+    drawerNavController: NavHostController,
+    parentNavController: NavHostController,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
 
@@ -54,7 +56,7 @@ fun HomeScreen(
             viewModel.saveNewBook(it, context)
 
             // Navigate
-            navController.navigate("${Routes.READER}?uri=${Uri.encode(it.toString())}")
+            parentNavController.navigate("${Routes.READER}?uri=${Uri.encode(it.toString())}")
         }
     }
 
@@ -69,7 +71,7 @@ fun HomeScreen(
         LazyColumn() {
             items(books.size) { index ->
                 BookItem(books[index]) {
-                    navController.navigate("${Routes.READER}?uri=${Uri.encode(books[index].path)}")
+                    parentNavController.navigate("${Routes.READER}?uri=${Uri.encode(books[index].path)}")
     }
             }
         }
