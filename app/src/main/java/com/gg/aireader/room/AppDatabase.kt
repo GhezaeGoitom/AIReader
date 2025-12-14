@@ -2,7 +2,7 @@ package com.gg.aireader.room
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.gg.aireader.room.dao.RecentBookDao
+import com.gg.aireader.room.dao.RecentBooksDao
 import com.gg.aireader.room.dao.SettingsDao
 import com.gg.aireader.room.model.RecentBook
 import com.gg.aireader.room.model.UserSettings
@@ -12,10 +12,10 @@ import com.gg.aireader.room.model.UserSettings
         RecentBook::class,
         UserSettings::class
     ],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun recentBookDao(): RecentBookDao
+    abstract fun recentBookDao(): RecentBooksDao
     abstract fun settingsDao(): SettingsDao
 }

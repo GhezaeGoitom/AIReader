@@ -7,9 +7,6 @@ import androidx.room.PrimaryKey
 data class UserSettings(
     @PrimaryKey val id: Int = 0,
     val autoPlayMusic: Boolean = true,
-    val autoDetectMood: Boolean = true,
     val darkMode: Boolean = false,
-    val ocrEnabled: Boolean = true,
-    val language: String = "en",
     val preferredMood: String? = null
 )

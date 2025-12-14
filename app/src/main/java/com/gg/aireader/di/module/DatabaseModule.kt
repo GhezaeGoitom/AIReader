@@ -3,7 +3,7 @@ package com.gg.aireader.di.module
 import android.content.Context
 import androidx.room.Room
 import com.gg.aireader.room.AppDatabase
-import com.gg.aireader.room.dao.RecentBookDao
+import com.gg.aireader.room.dao.RecentBooksDao
 import com.gg.aireader.room.dao.SettingsDao
 import dagger.Module
 import dagger.Provides
@@ -32,7 +32,7 @@ object DatabaseModule {
     }
 
     @Provides
-    fun provideRecentBookDao(db: AppDatabase): RecentBookDao {
+    fun provideRecentBookDao(db: AppDatabase): RecentBooksDao {
         return db.recentBookDao()
     }
 
