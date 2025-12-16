@@ -77,11 +77,11 @@ fun PdfViewerScreen(
             }
         }
 
-        Button(onClick = {
-            if (isPlaying) viewModel.pause() else viewModel.resume()
-            viewModel.togglePlay()
-        }) {
-            Text(if (isPlaying) "Pause" else "Play")
-        }
+//        Button(onClick = {
+//            if (isPlaying) viewModel.pause() else viewModel.resume()
+//            viewModel.togglePlay()
+//        }) {
+//            Text(if (isPlaying) "Pause" else "Play")
+//        }
     }
 }

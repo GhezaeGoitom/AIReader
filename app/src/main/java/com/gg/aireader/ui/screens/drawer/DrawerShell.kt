@@ -89,7 +89,9 @@ fun DrawerShell(parentNavController: NavHostController) {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text("AI Reader") },
+                    title = {
+//                        Text("AI Reader")
+                            },
                     navigationIcon = {
                         IconButton(
                             onClick = {

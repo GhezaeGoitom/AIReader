@@ -34,12 +34,6 @@ fun SettingsScreen(settingViewModel: SettingsViewModel = hiltViewModel()){
         verticalArrangement = Arrangement.Top
     ) {
 
-        Text(
-            text = "Settings",
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(bottom = 24.dp)
-        )
-
          Card(
             shape = RoundedCornerShape(12.dp),
             modifier = Modifier
@@ -53,7 +47,7 @@ fun SettingsScreen(settingViewModel: SettingsViewModel = hiltViewModel()){
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
+                    .padding(20.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -62,11 +56,6 @@ fun SettingsScreen(settingViewModel: SettingsViewModel = hiltViewModel()){
                         text = "Enable Smart Music",
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurface
-                    )
-                    Text(
-                        text = "Automatically generate music based on your reading",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
 
