@@ -1,9 +1,13 @@
 package com.gg.aireader.ui.screens.drawer
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DrawerValue
@@ -21,11 +25,16 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
+import com.gg.aireader.R
 import com.gg.aireader.ui.screens.model.Routes
 import com.gg.aireader.ui.screens.navigation.AppNavGraph
 import kotlinx.coroutines.launch
@@ -46,13 +55,22 @@ fun DrawerShell(parentNavController: NavHostController) {
                     Modifier.width(LocalConfiguration.current.screenWidthDp.dp * 0.50f)
             ) {
 
-                Spacer(Modifier.height(24.dp))
+                Spacer(Modifier.height(5.dp))
 
-                Text(
-                    "Menu",
-                    style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.padding(16.dp)
+                Image(
+                    painter = painterResource(R.drawable.ic_launcher_round),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .align(alignment = Alignment.CenterHorizontally)
+//                        .size(64.dp)
+                        .clip(RoundedCornerShape(16.dp))
+                        .padding(8.dp)
                 )
+
+                Spacer(Modifier.height(15.dp))
+
+
+                //HOME
 
                 NavigationDrawerItem(
                     label = { Text("Home") },
@@ -69,6 +87,9 @@ fun DrawerShell(parentNavController: NavHostController) {
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
 
+
+                // SETTINGS
+
                 NavigationDrawerItem(
                     label = { Text("Settings") },
                     selected = false,
@@ -83,6 +104,26 @@ fun DrawerShell(parentNavController: NavHostController) {
                     },
                     modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
                 )
+
+
+
+                // ABOUT
+
+                NavigationDrawerItem(
+                    label = { Text("About") },
+                    selected = false,
+                    onClick = {
+                        scope.launch {
+                            drawerState.close()
+                            drawerNavController.navigate(Routes.ABOUT){
+                                launchSingleTop = true
+                                popUpTo(drawerNavController.graph.startDestinationId)
+                            }
+                        }
+                    },
+                    modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
+                )
+
             }
         }
     ) {

@@ -11,7 +11,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(settingsRepo: SettingRepo) : ViewModel() {
 
-    val _isSmartMusicEnabled = MutableStateFlow(true)
+    val _isSmartMusicEnabled = MutableStateFlow(false)
     val isSmartMusicEnabled = _isSmartMusicEnabled.asStateFlow()
 
 

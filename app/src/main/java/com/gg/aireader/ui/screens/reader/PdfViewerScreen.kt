@@ -14,8 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.gg.aireader.ui.screens.common.PdfPage
 import com.gg.aireader.ui.screens.reader.ReaderViewModel
+import com.gg.aireader.utils.getFileNameForDisplay
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 
@@ -41,9 +43,11 @@ fun PdfViewerScreen(
         }
     }
 
-    // text extraction + mood detection
+    // Save to Recent books + text extraction + mood detection
     LaunchedEffect(isRendered) {
         if (isRendered) {
+            val fileName = pdfUri?.toUri()?.getFileNameForDisplay(contentResolver = context.contentResolver)
+            viewModel.saveNewBook(uri = pdfUri?.toUri(), fileName = fileName ?: "UnNamedBook")
             viewModel.extractTextFromPage(10)
         }
     }
@@ -62,7 +66,7 @@ fun PdfViewerScreen(
             .distinctUntilChanged()
             .debounce(600)
             .collect { page ->
-                // TODO: trigger OCR here if needed
+                viewModel.extractTextFromPage(pageIndex = page)
             }
     }
 

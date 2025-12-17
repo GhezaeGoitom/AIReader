@@ -47,6 +47,10 @@ class ReaderViewModel @Inject constructor(private val pdfRepo: PdfRepo,
     private val _mood = MutableStateFlow("")
     val mood = _mood.asStateFlow()
 
+    private val _currentPage = MutableStateFlow(0)
+    val currentPage = _currentPage.asStateFlow()
+
+
     // exoplayer
     fun play(uri: String){
         val mediaItem = MediaItem.fromUri(uri)
@@ -81,11 +85,8 @@ class ReaderViewModel @Inject constructor(private val pdfRepo: PdfRepo,
                 _isMoodAvailable.value = false
                 val page = _renderedPages.value[pageIndex]
                 val text = pdfRepo.extractTextFromBitmap(page)
-                Log.d("GG_RENDER", "Bitmap size: ${page.width}x${page.height}")
-                Log.d("GG_RENDER2", "Bitmap text: ${text.substring(0,30)}")
                 _pageText.value = text
                 val moodFromOCR = pdfRepo.analyzeMood(text)
-                Log.d("gg_render_2220", moodFromOCR.toString())
                 _mood.value = moodFromOCR
                 _isMoodAvailable.value = true
 
@@ -107,6 +108,22 @@ class ReaderViewModel @Inject constructor(private val pdfRepo: PdfRepo,
     }
 
 
+    fun saveNewBook(uri: Uri?, fileName: String) {
+
+        viewModelScope.launch {
+            booksRepo.upsertBooks(RecentBook(
+                path = uri.toString(),
+                title = fileName,
+                pageCount = _renderedPages.value.size,
+                lastOpened = null,
+                currentPage = null,
+                cover = null,
+                mood = null,
+                progress = null,
+            ))
+        }
+
+    }
 
     override fun onCleared() {
         super.onCleared()

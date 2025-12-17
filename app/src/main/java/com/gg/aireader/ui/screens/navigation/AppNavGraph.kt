@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.gg.aireader.ui.screens.about.About
 import com.gg.aireader.ui.screens.home.HomeScreen
 import com.gg.aireader.ui.screens.model.Routes
 import com.gg.aireader.ui.screens.setting.SettingsScreen
@@ -28,6 +29,10 @@ fun AppNavGraph(innerPadding: PaddingValues,
 
         composable(Routes.SETTINGS) {
             SettingsScreen()
+        }
+
+        composable(Routes.ABOUT) {
+            About()
         }
 
     }

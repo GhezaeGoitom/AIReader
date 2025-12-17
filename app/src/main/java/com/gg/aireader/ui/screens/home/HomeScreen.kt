@@ -65,10 +65,6 @@ fun HomeScreen(
                 it,
                 Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
             )
-
-            // Save to Room
-            viewModel.saveNewBook(it, context)
-
             // Navigate
             parentNavController.navigate("${Routes.READER}?uri=${Uri.encode(it.toString())}")
         }
@@ -91,7 +87,7 @@ fun HomeScreen(
                 contentDescription = null
             )
             Spacer(Modifier.width(8.dp))
-            Text("Open Book", style = MaterialTheme.typography.titleMedium)
+            Text("Add Book", style = MaterialTheme.typography.titleMedium)
         }
 
         Spacer(Modifier.height(20.dp))

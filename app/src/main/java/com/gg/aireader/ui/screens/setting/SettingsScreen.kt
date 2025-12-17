@@ -1,5 +1,6 @@
 package com.gg.aireader.ui.screens.setting
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
@@ -26,6 +28,7 @@ fun SettingsScreen(settingViewModel: SettingsViewModel = hiltViewModel()){
 
     val isSmartMusicEnabled by settingViewModel.isSmartMusicEnabled.collectAsState()
 
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -61,7 +64,12 @@ fun SettingsScreen(settingViewModel: SettingsViewModel = hiltViewModel()){
 
                 Switch(
                     checked = isSmartMusicEnabled,
-                    onCheckedChange = { settingViewModel.smartMusicToggle() }
+                    onCheckedChange = { settingViewModel.smartMusicToggle()
+                        if (!isSmartMusicEnabled){
+                            Toast.makeText(context,"Subscription Plan Development on Progress!",Toast.LENGTH_LONG).show()
+                        }
+
+                    }
                 )
             }
         }
