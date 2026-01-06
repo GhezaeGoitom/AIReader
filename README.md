@@ -145,9 +145,9 @@ Data Sources (OCR / AI / Music / DB)
 ## 🧑‍💻 Developer
 
 **Ghezae G. Weldemariam**  
-Sr Android Engineer | AI-Focused Software Engineer
+Software Engineer, Android | AI-Focused Software Engineer
 
-- LinkedIn: https://linkedIn.com/in/ghezae-g
+- LinkedIn: https://www.linkedin.com/in/ghezae-g-w/
 
 ---
 
